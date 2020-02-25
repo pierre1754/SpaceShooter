@@ -11,7 +11,23 @@ class entity:
         self.__shootSpeed = shootSpeed
 
     def move(self, to_add: vector):
-        self.__can.move(self.__shape, to_add.x, to_add.y)
+        x, y, w, h = self.__can.bbox(self.__shape)
+        w -= x
+        h -= y
+        if self.__shootSpeed.x == 0 and self.__shootSpeed.y == 0:
+            self.__can.move(self.__shape, to_add.x, to_add.y)
+            return
+        
+        if 0 < x + to_add.x < 700 - w:
+            self.__can.move(self.__shape, to_add.x, 0)
+        else:
+            self.__can.move(self.__shape, 0, to_add.y)
+
+        if 0 < y + to_add.y < 700 - h:
+            self.__can.move(self.__shape, 0, to_add.y)
+        else:
+            self.__can.move(self.__shape, 0, 0)
+
 
     def shot(self):
         if self.__onShot == False:
