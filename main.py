@@ -1,27 +1,27 @@
 ﻿import tkinter as tk
-import pygame
-from tkinter import Tk, Canvas, PhotoImage
+from tkinter import Tk, Canvas
 from entity import entity, vector
-from pygame import mixer
+import sound
+import images
 
 fenetre=Tk()
+
+sound.init()
+images.init()
 
 fenetre.title("SpaceShooter")
 
 width = 1600
 height = 900
 
-can=Canvas(fenetre, height = height ,  width = width ) 
+can=Canvas(fenetre, height = height,  width = width)
 
 can.pack()
 can.focus_set()
-pygame.init()
 
-img = PhotoImage (file = "660.gif")
+vessel = entity(can, can.create_image(500, 0, image = images.clone(1)), vector(20, 0))
 
-mechant1 = entity(can, can.create_rectangle(0, 0, 50, 50, fill = 'red'), vector(-20, 0))
-
-vessel = entity(can, can.create_image(500, 0, image = img), vector(20, 0))
+mechant1 = entity(can, can.create_image(0, 0, image = images.clone(2)), vector(-20, 0))
 
 mechant1.move(vector(1500, 300))
 
