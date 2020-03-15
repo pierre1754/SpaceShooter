@@ -2,8 +2,12 @@ from pygame import mixer
 
 def init():
     mixer.init()
-    global sound
-    sound = mixer.Sound("soundshot1.wav")
+    global allyshot, enemyshot
+    allyshot = mixer.Sound("allyshot.wav")
+    enemyshot = mixer.Sound("enemyshot.wav")
 
-def play():
-    sound.play()
+def play(type):
+    if type == 1:
+        allyshot.play()
+    elif type == 2:
+        enemyshot.play()

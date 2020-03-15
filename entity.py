@@ -56,7 +56,7 @@ class entity:
             w -= x
             h -= y
             self.__shoots.append(entity(self.__can, self.__can.create_image(x, y, image = images.clone(3)), vector(0, 0)))
-            play()
+            play(1)
 
     def shotbad(self):
         if self.__onShotbad == False:
@@ -66,6 +66,7 @@ class entity:
             w -= x
             h -= y
             self.__shoots.append(entity(self.__can, self.__can.create_image(x, y, image = images.clone(4)), vector(0, 0)))
+            play(2)
 
     def __readyToShot(self):
         self.__onShot = False
