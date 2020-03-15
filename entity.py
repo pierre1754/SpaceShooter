@@ -55,7 +55,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.__shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y, image = images.clone(3)), vector(0, 0)))
+            self.__shoots.append(entity(self.__can, self.__can.create_image(x + 192, y + 45, image = images.clone(3)), vector(0, 0)))
             play(1)
 
     def shotbad(self):
@@ -65,7 +65,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.__shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y, image = images.clone(4)), vector(0, 0)))
+            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(4)), vector(0, 0)))
             play(2)
 
     def __readyToShot(self):
