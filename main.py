@@ -4,30 +4,28 @@ from entity import entity, vector
 import sound
 import images
 
-fenetre=Tk()
+window = Tk()
+
+window.attributes('-fullscreen', True)
 
 sound.init()
 images.init()
 
-fenetre.title("SpaceShooter")
+window.title("SpaceShooter")
 
-width = 1600
-height = 900
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
 
-can=Canvas(fenetre, height = height,  width = width)
+can = Canvas(window, height = height,  width = width)
 
 can.pack()
 can.focus_set()
 
-vessel = entity(can, can.create_image(500, 0, image = images.clone(1)), vector(20, 0))
+vessel = entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(1)), vector(20, 0))
 
-mechant1 = entity(can, can.create_image(0, 0, image = images.clone(2)), vector(-20, 0))
+enemy = entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(2)), vector(-20, 0))
 
-mechant1.move(vector(1500, 300))
-
-vessel.move(vector(100, 300))
-
-key_press = {"Left": False, "Right": False, "Up": False, "Down": False, "space":False}
+key_press = {"Left": False, "Right": False, "Up": False, "Down": False, "space":False, "Escape":False}
 
 def press(event):
     key_press[event.keysym] = True
@@ -35,7 +33,7 @@ def press(event):
 def release(event):
     key_press[event.keysym] = False
 
-for key in ["Up", "Left", "Right", "Down", "space"]:
+for key in ["Up", "Left", "Right", "Down", "space", "Escape"]:
     can.bind('<KeyPress-%s>' %key, press)
     can.bind('<KeyRelease-%s>' %key, release)
 
@@ -50,12 +48,15 @@ def loop():
         vessel.move(vector(0, 10))
     if key_press["space"]:
         vessel.shot()
+    if key_press["Escape"]:
+        window.destroy()
+        return
     vessel.update(16)
-    mechant1.update(16)
-    mechant1.movebad()
-    mechant1.shotbad()
-    fenetre.after(16, loop)
+    enemy.update(16)
+    enemy.movebad()
+    enemy.shotbad()
+    window.after(16, loop)
 
 loop()
 
-fenetre.mainloop()
+window.mainloop()
