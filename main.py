@@ -21,9 +21,9 @@ can = Canvas(window, height = height,  width = width)
 can.pack()
 can.focus_set()
 
-vessel = entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(1)), vector(20, 0))
+vessel = entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(2)), vector(20, 0))
 
-enemy = entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(2)), vector(-20, 0))
+enemy = entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(3)), vector(-20, 0))
 
 key_press = {"Left": False, "Right": False, "Up": False, "Down": False, "space":False, "Escape":False}
 

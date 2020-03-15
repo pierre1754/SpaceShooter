@@ -21,6 +21,7 @@ class entity:
         x, y, w, h = self.__can.bbox(self.shape)
         w -= x
         h -= y
+
         if self.__shootSpeed.x == 0 and self.__shootSpeed.y == 0:
             self.__can.move(self.shape, to_add.x, to_add.y)
             return
@@ -55,7 +56,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x + 192, y + 45, image = images.clone(3)), vector(0, 0)))
+            self.__shoots.append(entity(self.__can, self.__can.create_image(x + 150, y + 45, image = images.clone(4)), vector(0, 0)))
             play(1)
 
     def shotbad(self):
@@ -65,7 +66,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(4)), vector(0, 0)))
+            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(5)), vector(0, 0)))
             play(2)
 
     def __readyToShot(self):
@@ -88,11 +89,3 @@ class entity:
             if x > self.__can.winfo_width():
                 self.__can.delete(i.shape)
                 self.__shoots.remove(i)
-
-
-
-    """ def update(self, time):
-        self.__timerShot += time
-        if self.__timerShot > 3000:
-            self.__timerShot = 0
-            self.__can.delete(self.__shoots) """

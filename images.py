@@ -1,7 +1,8 @@
 from tkinter import PhotoImage
 
 def init():
-    global vessel, enemy, allyshot, enemyshot
+    global background, vessel, enemy, allyshot, enemyshot
+    background = PhotoImage (file = "background.gif")
     vessel = PhotoImage (file = "vessel.gif")
     enemy = PhotoImage (file = "enemy.gif")
     allyshot = PhotoImage (file = "allyshot.gif")
@@ -9,10 +10,12 @@ def init():
 
 def clone(type):
     if type == 1:
-        return vessel
+        return background
     elif type == 2:
-        return enemy
+        return vessel
     elif type == 3:
-        return allyshot
+        return enemy
     elif type == 4:
+        return allyshot
+    elif type == 5:
         return enemyshot
