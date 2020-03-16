@@ -26,11 +26,8 @@ can = Canvas(window, height = height,  width = width)
 can.pack()
 can.focus_set()
 
-vessel = entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(2)), vector(20, 0))
-enemy = entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(3)), vector(-20, 0))
-
-world.addEntity(vessel)
-world.addEntity(enemy)
+world.addEntity(entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(2)), vector(20, 0), 100))
+world.addEntity(entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(3)), vector(-20, 0), 100))
 
 key_press = {"Left": False, "Right": False, "Up": False, "Down": False, "space":False, "Escape":False}
 
@@ -46,25 +43,26 @@ for key in ["Up", "Left", "Right", "Down", "space", "Escape"]:
 
 def loop():
     if key_press["Right"]:
-        vessel.move(vector(10, 0))
+        world.getVessel().move(vector(10, 0))
     if key_press["Left"]:
-        vessel.move(vector(-10, 0))
+        world.getVessel().move(vector(-10, 0))
     if key_press["Up"]:
-        vessel.move(vector(0, -10))
+        world.getVessel().move(vector(0, -10))
     if key_press["Down"]:
-        vessel.move(vector(0, 10))
+        world.getVessel().move(vector(0, 10))
     if key_press["space"]:
-        vessel.shot()
+        world.getVessel().shot()
     if key_press["Escape"]:
+        world.destroy()
         window.destroy()
         return
-    vessel.update(16)
-    enemy.update(16)
-    enemy.movebad()
-    enemy.shotbad()
-
+    world.update(16)
+    if world.end:
+        world.destroy()
+        window.destroy()
+        return
+    world.enemiesUpdate()
     window.after(16, loop)
 
 loop()
-
 window.mainloop()

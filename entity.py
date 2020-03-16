@@ -6,7 +6,7 @@ from pygame import mixer
 from sound import play
 
 class entity:
-    def __init__(self, can: Canvas, shape, shootSpeed: vector):
+    def __init__(self, can: Canvas, shape, shootSpeed: vector, life):
         self.__can = can
         self.shape = shape
         self.__onShot = False
@@ -17,6 +17,10 @@ class entity:
         self.__shootSpeed = shootSpeed
         self.__dybad = -8
         self.__dxbad = -8
+        self.life = life
+
+    def __del__(self):
+        self.__can.delete(self.shape)
         
     def move(self, to_add: vector):
         x, y, w, h = self.__can.bbox(self.shape)
@@ -57,7 +61,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.shoots.append(entity(self.__can, self.__can.create_image(x + 150, y + 45, image = images.clone(4)), vector(0, 0)))
+            self.shoots.append(entity(self.__can, self.__can.create_image(x + 150, y + 45, image = images.clone(4)), vector(0, 0), 0))
             play(1)
 
     def shotbad(self):
@@ -67,7 +71,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(5)), vector(0, 0)))
+            self.shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(5)), vector(0, 0), 0))
             play(2)
 
     def __readyToShot(self):
@@ -92,16 +96,20 @@ class entity:
             entities = world.getEntitiesList(self)
             for entity in entities:
                 if shot.onHit(entity):
-                    print("ALA AKBAR")
+                    entity.life -= 10
+                    if entity.life <= 0:
+                        if entity == world.getVessel():
+                            world.end = True
+                        world.removeEntity(entity)
+                    self.shoots.remove(shot)
+                    return
             
             # Tir sort de l'écran
             x, y, w, h = self.__can.bbox(shot.shape)
             w -= x
             h -= y
             if x < 0 - w:
-                self.__can.delete(shot.shape)
                 self.shoots.remove(shot)
             if x > self.__can.winfo_width():
-                self.__can.delete(shot.shape)
                 self.shoots.remove(shot)
             
