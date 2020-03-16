@@ -4,6 +4,7 @@ from entity import entity, vector
 import sound
 import images
 import world
+import background
 
 window = Tk()
 
@@ -18,13 +19,11 @@ window.title("SpaceShooter")
 width = window.winfo_screenwidth()
 height = window.winfo_screenheight()
 
-# width = 1366
-# height = 768
-
 can = Canvas(window, height = height,  width = width)
 
 can.pack()
 can.focus_set()
+background.init(can, window)
 
 world.addEntity(entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(2)), vector(20, 0), 100))
 world.addEntity(entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(3)), vector(-20, 0), 100))
