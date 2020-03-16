@@ -1,10 +1,9 @@
 # Space Shooter
 
-Please install tkinter and pygame
+Install dependencies
 
 ```bash
-sudo apt install python3-tk
-sudo apt-get install python3-pygame
+pip3 install -r requirements.txt
 ```
 
 # How to launch
@@ -14,4 +13,3 @@ Use python3
 ```bash
 python3 main.py
 ```
-

@@ -21,7 +21,7 @@ class entity:
 
     def __del__(self):
         self.__can.delete(self.shape)
-        
+
     def move(self, to_add: vector):
         x, y, w, h = self.__can.bbox(self.shape)
         w -= x
@@ -91,7 +91,7 @@ class entity:
         for shot in self.shoots:
             # Bouge les tirs
             shot.move(self.__shootSpeed)
-            
+
             # Tir qui touchent
             entities = world.getEntitiesList(self)
             for entity in entities:
@@ -103,7 +103,7 @@ class entity:
                         world.removeEntity(entity)
                     self.shoots.remove(shot)
                     return
-            
+
             # Tir sort de l'écran
             x, y, w, h = self.__can.bbox(shot.shape)
             w -= x
@@ -112,4 +112,3 @@ class entity:
                 self.shoots.remove(shot)
             if x > self.__can.winfo_width():
                 self.shoots.remove(shot)
-            
