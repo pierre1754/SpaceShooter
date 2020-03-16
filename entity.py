@@ -1,4 +1,5 @@
 import images
+import world
 from tkinter import Canvas
 from vector import vector
 from pygame import mixer
@@ -12,7 +13,7 @@ class entity:
         self.__onShotbad = False
         self.__timer = 0
         self.__timerShot = 0
-        self.__shoots = []
+        self.shoots = []
         self.__shootSpeed = shootSpeed
         self.__dybad = -8
         self.__dxbad = -8
@@ -56,7 +57,7 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x + 150, y + 45, image = images.clone(4)), vector(0, 0)))
+            self.shoots.append(entity(self.__can, self.__can.create_image(x + 150, y + 45, image = images.clone(4)), vector(0, 0)))
             play(1)
 
     def shotbad(self):
@@ -66,26 +67,41 @@ class entity:
             x, y, w, h = self.__can.bbox(self.shape)
             w -= x
             h -= y
-            self.__shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(5)), vector(0, 0)))
+            self.shoots.append(entity(self.__can, self.__can.create_image(x, y + 52, image = images.clone(5)), vector(0, 0)))
             play(2)
 
     def __readyToShot(self):
         self.__onShot = False
         self.__onShotbad = False
 
+    def onHit(self, entity):
+        xa, ya, wa, ha = self.__can.bbox(self.shape)
+        xb, yb, wb, hb = self.__can.bbox(entity.shape)
+        return xb <= wa <= wb + wa - xa and yb <= ha <= hb + ha - ya
+
     def update(self, time):
         self.__timer += time
         if self.__timer > 300:
             self.__timer = 0
             self.__readyToShot()
-        for i in self.__shoots:
-            i.move(self.__shootSpeed)
-            x, y, w, h = self.__can.bbox(i.shape)
+        for shot in self.shoots:
+            # Bouge les tirs
+            shot.move(self.__shootSpeed)
+            
+            # Tir qui touchent
+            entities = world.getEntitiesList(self)
+            for entity in entities:
+                if shot.onHit(entity):
+                    print("ALA AKBAR")
+            
+            # Tir sort de l'écran
+            x, y, w, h = self.__can.bbox(shot.shape)
             w -= x
             h -= y
             if x < 0 - w:
-                self.__can.delete(i.shape)
-                self.__shoots.remove(i)
+                self.__can.delete(shot.shape)
+                self.shoots.remove(shot)
             if x > self.__can.winfo_width():
-                self.__can.delete(i.shape)
-                self.__shoots.remove(i)
+                self.__can.delete(shot.shape)
+                self.shoots.remove(shot)
+            

@@ -3,18 +3,23 @@ from tkinter import Tk, Canvas
 from entity import entity, vector
 import sound
 import images
+import world
 
 window = Tk()
 
-window.attributes('-fullscreen', True)
+# window.attributes('-fullscreen', True)
 
 sound.init()
 images.init()
+world.init()
 
 window.title("SpaceShooter")
 
-width = window.winfo_screenwidth()
-height = window.winfo_screenheight()
+# width = window.winfo_screenwidth()
+# height = window.winfo_screenheight()
+
+width = 1366
+height = 768
 
 can = Canvas(window, height = height,  width = width)
 
@@ -22,8 +27,10 @@ can.pack()
 can.focus_set()
 
 vessel = entity(can, can.create_image(width * 0.25, height * 0.5, image = images.clone(2)), vector(20, 0))
-
 enemy = entity(can, can.create_image(width * 0.75, height * 0.5, image = images.clone(3)), vector(-20, 0))
+
+world.addEntity(vessel)
+world.addEntity(enemy)
 
 key_press = {"Left": False, "Right": False, "Up": False, "Down": False, "space":False, "Escape":False}
 
@@ -55,6 +62,7 @@ def loop():
     enemy.update(16)
     enemy.movebad()
     enemy.shotbad()
+
     window.after(16, loop)
 
 loop()
