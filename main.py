@@ -7,7 +7,7 @@ import world
 
 window = Tk()
 
-# window.attributes('-fullscreen', True)
+window.attributes('-fullscreen', True)
 
 sound.init()
 images.init()
@@ -15,11 +15,11 @@ world.init()
 
 window.title("SpaceShooter")
 
-# width = window.winfo_screenwidth()
-# height = window.winfo_screenheight()
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
 
-width = 1366
-height = 768
+# width = 1366
+# height = 768
 
 can = Canvas(window, height = height,  width = width)
 
