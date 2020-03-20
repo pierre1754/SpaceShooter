@@ -2,6 +2,7 @@ import vector
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
 
+# Définition du parallax
 def init(can, window):
     global background
     img = Image.open("background.png")

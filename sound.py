@@ -1,5 +1,6 @@
 from pygame import mixer
 
+# Son
 def init():
     mixer.init()
     global allyshot, enemyshot
