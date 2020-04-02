@@ -69,7 +69,7 @@ def loop():
         world.destroy()
         window.destroy()
         return
-    
+
     # Assignation de fonctions sur world et window
     world.enemiesUpdate()
     window.after(16, loop)
